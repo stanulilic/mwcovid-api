@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-cron": "^2.0.3",
+    "pg": "^8.2.1"
   }
 }
