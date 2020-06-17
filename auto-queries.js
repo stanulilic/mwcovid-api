@@ -23,6 +23,20 @@ const getLocalCovidData = async () => {
     }
 }
 
+const getDistrictCovidData = async () => {
+    try {
+        const response = await axios({
+                url: 'https://covid19.health.gov.mw:3000/api/v0/districts/aggregates',
+            method: 'get',
+        });
+        const result = await response.data;
+        return result
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 const saveCountryData = () => {
     getLocalCovidData().then((response) => {
         const {
@@ -45,7 +59,32 @@ const saveCountryData = () => {
     });
 };
 
+const saveDistrictData = () => {
+    getDistrictCovidData().then((response) => {
+            response.districts.forEach((district) => {
+        const {
+            numberOfConfirmedCases,
+            numberOfConfirmedDeaths,
+            numberOfRecoveredPatients,
+            numberOfSuspectedCases,
+            districtGeolocation,
+            districtName
+        } = district;
+
+         const {lat, lng} = districtGeolocation;
+        
+        pool.query('INSERT INTO districtdata(districtGeolocationlat,districtGeolocationlng,districtName,numberOfConfirmedCases,numberOfConfirmedDeaths,numberOfRecoveredPatients,numberOfSuspectedCases) VALUES ($1, $2, $3, $4, $5, $6, $7)', [lat, lng, districtName, numberOfConfirmedCases, numberOfConfirmedDeaths, numberOfRecoveredPatients, numberOfSuspectedCases], (error, results) => {
+            if (error) {
+                throw error
+            }
+
+        })
+            });
+    });
+};
+
 module.exports = {
     saveCountryData,
-    getLocalCovidData
+    getLocalCovidData,
+    saveDistrictData,
 };
