@@ -8,11 +8,10 @@ const pool = new Pool({
     port: 5432,
 });
 
-const response = JSON.parse(fs.readFileSync('./april/april-2-covid-update.json', 'utf8'));
-
+const response = JSON.parse(fs.readFileSync('./april/april-30-covid-update.json', 'utf8'));
 
 const saveDistrictData = () => {
-        const date = '2020-04-02';
+        const date = '2020-04-30';
             response.districts.forEach((district) => {
         const {
             numberOfConfirmedCases,
