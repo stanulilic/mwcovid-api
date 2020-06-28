@@ -87,4 +87,5 @@ module.exports = {
     saveCountryData,
     getLocalCovidData,
     saveDistrictData,
+    pool,
 };
