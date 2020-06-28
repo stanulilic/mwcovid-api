@@ -7,6 +7,7 @@ const port = 3001;
 
 
 app.get('/', db.getCountryData);
+app.get('/today', db.getRecentCountryData);
 
 cron.schedule("1 0 * * *", function() {   
 saveCountryData();
