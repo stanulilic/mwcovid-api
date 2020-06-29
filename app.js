@@ -9,6 +9,7 @@ const port = 3001;
 app.get('/', db.getCountryData);
 app.get('/today', db.getRecentCountryData);
 app.get('/districts', db.getDistrictsData);
+app.get('/districts/today', db.getRecentDistrictsData);
 
 cron.schedule("1 0 * * *", function() {   
 saveCountryData();

@@ -29,5 +29,20 @@ const getDistrictsData = (request, response) => {
         });
 }
 
+const getRecentDistrictsData = (request, response) => {
+        const today = new Date();
+        const date =today.getDate();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        // format date as: 2020-05-30
+        const fullDate = `${year}-${month <= 9 ? `0${month}`:month}-${date}`; 
+        pool.query('SELECT * FROM districtdata where dateadded::date =$1', [fullDate], (error, results) => {
+                if(error) {
+                        throw error;
+                }
+                response.status(200).json(results.rows);
+        });
+}
 
-module.exports = { getCountryData, getRecentCountryData, getDistrictsData };
+
+module.exports = { getCountryData, getRecentCountryData, getDistrictsData, getRecentDistrictsData };
