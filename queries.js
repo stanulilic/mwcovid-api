@@ -1,17 +1,8 @@
 const { pool } = require("./auto-queries.js");
 
 const getCountryData = (request, response) => {
-  pool.query("SELECT * FROM nationaldata", (error, results) => {
-    if (error) {
-      throw error;
-    }
-    response.status(200).json(results.rows);
-  });
-};
-
-const getRecentCountryData = (request, response) => {
   pool.query(
-    "SELECT * FROM nationaldata ORDER BY id DESC LIMIT 1",
+    "SELECT * FROM nationaldata ORDER BY id DESC",
     (error, results) => {
       if (error) {
         throw error;
@@ -66,7 +57,6 @@ const getRecentDistrictsData = (request, response) => {
 
 module.exports = {
   getCountryData,
-  getRecentCountryData,
   getDistrictsData,
   getRecentDistrictsData,
   getAllCountryData

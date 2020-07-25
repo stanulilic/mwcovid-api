@@ -7,8 +7,7 @@ const app = express();
 const port = 3001;
 
 app.use(cors({origin: 'http://localhost:3000'}));
-app.get('/api/confirmed', db.getCountryData);
-app.get('/api/daily', db.getRecentCountryData);
+app.get('/api/national/all', db.getCountryData);
 app.get('/api/national/all/:id', db.getAllCountryData);
 app.get('/api/districts', db.getDistrictsData);
 app.get('/api/districts/daily', db.getRecentDistrictsData);
