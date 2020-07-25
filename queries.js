@@ -21,6 +21,18 @@ const getRecentCountryData = (request, response) => {
   );
 };
 
+const getAllCountryData = (request, response) => {
+        const limit = parseInt(request.params.id);
+        pool.query(
+                "SELECT * FROM nationaldata ORDER BY id DESC LIMIT $1", [limit], (error, results) => {
+                        if(error) {
+                                throw error;
+                        }
+                        response.status(200).json(results.rows);
+                }
+        );
+}
+
 const getDistrictsData = (request, response) => {
   pool.query(
     "SELECT districtgeolocationlat,districtGeolocationlng,districtName,numberOfConfirmedCases,numberOfConfirmedDeaths,numberOfRecoveredPatients,numberOfSuspectedCases, dateadded  FROM districtdata GROUP BY dateadded,  districtgeolocationlat,districtGeolocationlng,districtName,numberOfConfirmedCases,numberOfConfirmedDeaths,numberOfRecoveredPatients,numberOfSuspectedCases ORDER BY dateadded",
@@ -57,4 +69,5 @@ module.exports = {
   getRecentCountryData,
   getDistrictsData,
   getRecentDistrictsData,
+  getAllCountryData
 };
