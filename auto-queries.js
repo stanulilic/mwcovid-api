@@ -47,7 +47,7 @@ const saveCountryData = () => {
             numberOfReceivedSamples,
             numberOfTestedSamples
         } = response;
-        pool.query('INSERT INTO nationaldata (numberOfConfirmedCases,numberOfConfirmedDeaths,numberOfRecoveredPatients,numberOfSuspectedCases,numberOfReceivedSamples,numberOfTestedSamples) VALUES ($1, $2, $3, $4, $5, $6)', [numberOfConfirmedCases, numberOfConfirmedDeaths,
+        pool.query('INSERT INTO nationaldata (number_of_confirmed_cases,number_of_confirmed_deaths,number_of_recovered_patients,number_of_suspected_cases,number_of_received_samples,number_of_tested_samples) VALUES ($1, $2, $3, $4, $5, $6)', [numberOfConfirmedCases, numberOfConfirmedDeaths,
             numberOfRecoveredPatients, numberOfSuspectedCases,
             numberOfReceivedSamples, numberOfTestedSamples
         ], (error, results) => {
