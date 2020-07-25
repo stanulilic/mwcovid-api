@@ -26,7 +26,7 @@ const getAllCountryData = (request, response) => {
 
 const getDistrictsData = (request, response) => {
   pool.query(
-    "SELECT districtgeolocationlat,districtGeolocationlng,districtName,numberOfConfirmedCases,numberOfConfirmedDeaths,numberOfRecoveredPatients,numberOfSuspectedCases, dateadded  FROM districtdata GROUP BY dateadded,  districtgeolocationlat,districtGeolocationlng,districtName,numberOfConfirmedCases,numberOfConfirmedDeaths,numberOfRecoveredPatients,numberOfSuspectedCases ORDER BY dateadded",
+    "SELECT district_geolocationlat,district_geolocationlng,district_name,number_of_confirmed_cases,number_of_confirmed_deaths,number_of_recovered_patients,number_of_suspected_cases, date_added  FROM districtdata GROUP BY date_added,  district_geolocationlat,district_geolocationlng,district_name,number_of_confirmed_cases,number_of_confirmed_deaths,number_of_recovered_patients,number_of_suspected_cases ORDER BY date_added",
     (error, results) => {
       if (error) {
         throw error;
@@ -44,7 +44,7 @@ const getRecentDistrictsData = (request, response) => {
   // format date as: 2020-05-30
   const fullDate = `${year}-${month <= 9 ? `0${month}` : month}-${date}`;
   pool.query(
-    "SELECT * FROM districtdata where dateadded::date =$1",
+    "SELECT * FROM districtdata where date_added::date =$1",
     [fullDate],
     (error, results) => {
       if (error) {

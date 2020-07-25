@@ -73,7 +73,7 @@ const saveDistrictData = () => {
 
          const {lat, lng} = districtGeolocation;
         
-        pool.query('INSERT INTO districtdata(districtGeolocationlat,districtGeolocationlng,districtName,numberOfConfirmedCases,numberOfConfirmedDeaths,numberOfRecoveredPatients,numberOfSuspectedCases) VALUES ($1, $2, $3, $4, $5, $6, $7)', [lat, lng, districtName, numberOfConfirmedCases, numberOfConfirmedDeaths, numberOfRecoveredPatients, numberOfSuspectedCases], (error, results) => {
+        pool.query('INSERT INTO districtdata(district_geolocationlat,district_geolocationlng,district_name, number_of_confirmed_cases,number_of_confirmed_deaths,number_of_recovered_patients,number_of_suspected_cases) VALUES ($1, $2, $3, $4, $5, $6, $7)', [lat, lng, districtName, numberOfConfirmedCases, numberOfConfirmedDeaths, numberOfRecoveredPatients, numberOfSuspectedCases], (error, results) => {
             if (error) {
                 throw error
             }
