@@ -1,4 +1,5 @@
 const { pool } = require("./auto-queries.js");
+const camelcaseKeys = require('camelcase-keys');
 
 const getCountryData = (request, response) => {
   pool.query(
@@ -7,7 +8,7 @@ const getCountryData = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(results.rows);
+      response.status(200).json(camelcaseKeys(results.rows));
     }
   );
 };
@@ -19,7 +20,7 @@ const getAllCountryData = (request, response) => {
                         if(error) {
                                 throw error;
                         }
-                        response.status(200).json(results.rows);
+                        response.status(200).json(camelcaseKeys(results.rows));
                 }
         );
 }
@@ -31,7 +32,7 @@ const getDistrictsData = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(results.rows);
+      response.status(200).json(camelcaseKeys(results.rows));
     }
   );
 };
@@ -50,7 +51,7 @@ const getRecentDistrictsData = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(results.rows);
+      response.status(200).json(camelcaseKeys(results.rows));
     }
   );
 };
