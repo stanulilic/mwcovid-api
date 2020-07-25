@@ -37,16 +37,10 @@ const getDistrictsData = (request, response) => {
   );
 };
 
-const getRecentDistrictsData = (request, response) => {
-  const today = new Date();
-  const date = today.getDate();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
-  // format date as: 2020-05-30
-  const fullDate = `${year}-${month <= 9 ? `0${month}` : month}-${date}`;
+const getAllDistrictsData = (request, response) => {
+  const limit = parseInt(request.params.id);
   pool.query(
-    "SELECT * FROM districtdata where date_added::date =$1",
-    [fullDate],
+    "SELECT district_geolocationlat,district_geolocationlng,district_name,number_of_confirmed_cases,number_of_confirmed_deaths,number_of_recovered_patients,number_of_suspected_cases, date_added  FROM districtdata GROUP BY date_added,  district_geolocationlat,district_geolocationlng,district_name,number_of_confirmed_cases,number_of_confirmed_deaths,number_of_recovered_patients,number_of_suspected_cases ORDER BY date_added DESC LIMIT $1", [limit],
     (error, results) => {
       if (error) {
         throw error;
@@ -56,9 +50,10 @@ const getRecentDistrictsData = (request, response) => {
   );
 };
 
+
 module.exports = {
   getCountryData,
   getDistrictsData,
-  getRecentDistrictsData,
+  getAllDistrictsData,
   getAllCountryData
 };
