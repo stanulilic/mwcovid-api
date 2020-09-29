@@ -39,7 +39,7 @@ const getDistrictCovidData = async () => {
 
 const saveCountryData = () => {
     getLocalCovidData().then((response) => {
-        const {
+        let {
             numberOfConfirmedCases,
             numberOfConfirmedDeaths,
             numberOfRecoveredPatients,
@@ -47,6 +47,13 @@ const saveCountryData = () => {
             numberOfReceivedSamples,
             numberOfTestedSamples
         } = response;
+        if (numberOfReceivedSamples === undefined || numberOfReceivedSamples === null) {
+                numberOfReceivedSamples = 0;
+        }
+        if (numberOfTestedSamples === undefined || numberOfTestedSamples === null) {
+                numberOfTestedSamples = 0;
+        }
+
         pool.query('INSERT INTO nationaldata (number_of_confirmed_cases,number_of_confirmed_deaths,number_of_recovered_patients,number_of_suspected_cases,number_of_received_samples,number_of_tested_samples) VALUES ($1, $2, $3, $4, $5, $6)', [numberOfConfirmedCases, numberOfConfirmedDeaths,
             numberOfRecoveredPatients, numberOfSuspectedCases,
             numberOfReceivedSamples, numberOfTestedSamples
