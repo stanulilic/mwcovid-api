@@ -9,8 +9,9 @@ const port = 3001;
 app.use(cors({origin: 'http://localhost:3000'}));
 app.get('/api/national/all', db.getCountryData);
 app.get('/api/national/all/:id', db.getAllCountryData);
-app.get('/api/districts/all', db.getDistrictsData);
-app.get('/api/districts/all/:id', db.getAllDistrictsData);
+app.get('/api/districts/', db.getDistrictsData);
+
+// app.get('/api/districts/', db.getAllDistrictsData);
 
 /* 59 21 is 23:59 in malawi*/
 cron.schedule("59 21 * * *", function() {   
