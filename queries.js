@@ -39,7 +39,20 @@ const getDistrictsData = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(camelcaseKeys(results.rows));
+      jsondata = JSON.stringify(camelcaseKeys(results.rows))
+      data = JSON.parse(jsondata)
+      districts = data.map(district => {
+              const districtGeolocation = {
+                          "lat": district.districtGeolocationlat,
+                          "lng": district.districtGeolocationlng
+                        }
+              district['districtGeolocation'] = districtGeolocation;
+              delete district.districtGeolocationlat;
+              delete district.districtGeolocationlng;
+              return district;
+     })
+
+      response.status(200).json(districts);
     }
   );
 };
