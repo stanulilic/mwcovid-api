@@ -1,4 +1,5 @@
 const { pool } = require("./auto-queries.js");
+const {nestGeolocationData} = require('./utils');
 const camelcaseKeys = require('camelcase-keys');
 
 const getCountryData = (request, response) => {
@@ -39,20 +40,8 @@ const getDistrictsData = (request, response) => {
       if (error) {
         throw error;
       }
-      jsondata = JSON.stringify(camelcaseKeys(results.rows))
-      data = JSON.parse(jsondata)
-      districts = data.map(district => {
-              const districtGeolocation = {
-                          "lat": district.districtGeolocationlat,
-                          "lng": district.districtGeolocationlng
-                        }
-              district['districtGeolocation'] = districtGeolocation;
-              delete district.districtGeolocationlat;
-              delete district.districtGeolocationlng;
-              return district;
-     })
-
-      response.status(200).json(districts);
+      districts = nestGeolocationData(results.rows) 
+       response.status(200).json(districts);
     }
   );
 };
@@ -75,19 +64,7 @@ const getDataByDistrictName = (request, response) => {
       if (error) {
         throw error;
       }
-      jsondata = JSON.stringify(camelcaseKeys(results.rows))
-      data = JSON.parse(jsondata)
-      districts = data.map(district => {
-              const districtGeolocation = {
-                          "lat": district.districtGeolocationlat,
-                          "lng": district.districtGeolocationlng
-                        }
-              district['districtGeolocation'] = districtGeolocation;
-              delete district.districtGeolocationlat;
-              delete district.districtGeolocationlng;
-              return district;
-     })
-
+      districts = nestGeolocationData(results.rows) 
       response.status(200).json(districts);
     }
   );
