@@ -16,4 +16,14 @@ function nestGeolocationData(rows) {
      return districts
 }
 
-module.exports = {nestGeolocationData};
+const toTitleCase = (phrase) => {
+        const split_value = phrase.includes('-') ? '-' : ' ';
+        return phrase
+            .toLowerCase()
+            .split(split_value)
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+
+}
+
+module.exports = {nestGeolocationData, toTitleCase};

@@ -1,5 +1,5 @@
 const { pool } = require("./auto-queries.js");
-const {nestGeolocationData} = require('./utils');
+const {nestGeolocationData, toTitleCase} = require('./utils');
 const camelcaseKeys = require('camelcase-keys');
 
 const getCountryData = (request, response) => {
@@ -47,7 +47,8 @@ const getDistrictsData = (request, response) => {
 };
 
 const getDataByDistrictName = (request, response) => {
-  const district_name = request.params.district_name;
+  const district_param = request.params.district_name;
+  const district_name = toTitleCase(district_param);
   pool.query(
     `SELECT district_geolocationlat,district_geolocationlng,district_name,
           number_of_confirmed_cases,number_of_confirmed_deaths,
@@ -69,6 +70,7 @@ const getDataByDistrictName = (request, response) => {
     }
   );
 };
+
 
 
 module.exports = {
