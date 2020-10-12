@@ -18,7 +18,12 @@ const getAllCountryData = (request, response) => {
         const limit = parseInt(request.params.id);
 
         pool.query(
-                "SELECT number_of_confirmed_cases,number_of_confirmed_deaths,number_of_recovered_patients,number_of_suspected_cases,number_of_received_samples, number_of_tested_samples, date_added::date FROM nationaldata ORDER BY date_added ASC OFFSET (SELECT count(*) FROM nationaldata)-$1", [limit], (error, results) => {
+                `SELECT number_of_confirmed_cases,number_of_confirmed_deaths,
+                number_of_recovered_patients,number_of_suspected_cases,
+                number_of_received_samples, number_of_tested_samples, date_added::date 
+                FROM nationaldata 
+                ORDER BY date_added 
+                ASC OFFSET (SELECT count(*) FROM nationaldata)-$1`, [limit], (error, results) => {
                         if(error) {
                                 throw error;
                         }

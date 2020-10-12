@@ -13,7 +13,6 @@ app.get('/api/districts/', db.getDistrictsData);
 app.get('/api/districts/:district_name', db.getDataByDistrictName);
 app.get('/api/districts/:district_name/all', db.getAllDataByDistrictName);
 
-
 /* 59 21 is 23:59 in malawi*/
 cron.schedule("59 21 * * *", function() {   
 saveCountryData();
