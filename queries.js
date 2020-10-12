@@ -1,6 +1,6 @@
 const { pool } = require("./auto-queries.js");
-const {nestGeolocationData, toTitleCase} = require('./utils');
-const camelcaseKeys = require('camelcase-keys');
+const { nestGeolocationData, toTitleCase } = require("./utils");
+const camelcaseKeys = require("camelcase-keys");
 
 const getCountryData = (request, response) => {
   pool.query(
@@ -15,22 +15,24 @@ const getCountryData = (request, response) => {
 };
 
 const getAllCountryData = (request, response) => {
-        const limit = parseInt(request.params.id);
+  const limit = parseInt(request.params.id);
 
-        pool.query(
-                `SELECT number_of_confirmed_cases,number_of_confirmed_deaths,
+  pool.query(
+    `SELECT number_of_confirmed_cases,number_of_confirmed_deaths,
                 number_of_recovered_patients,number_of_suspected_cases,
                 number_of_received_samples, number_of_tested_samples, date_added::date 
                 FROM nationaldata 
                 ORDER BY date_added 
-                ASC OFFSET (SELECT count(*) FROM nationaldata)-$1`, [limit], (error, results) => {
-                        if(error) {
-                                throw error;
-                        }
-                        response.status(200).json(camelcaseKeys(results.rows));
-                }
-        );
-}
+                ASC OFFSET (SELECT count(*) FROM nationaldata)-$1`,
+    [limit],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(camelcaseKeys(results.rows));
+    }
+  );
+};
 
 const getDistrictsData = (request, response) => {
   pool.query(
@@ -45,8 +47,8 @@ const getDistrictsData = (request, response) => {
       if (error) {
         throw error;
       }
-      districts = nestGeolocationData(results.rows) 
-       response.status(200).json(districts);
+      districts = nestGeolocationData(results.rows);
+      response.status(200).json(districts);
     }
   );
 };
@@ -65,12 +67,13 @@ const getDataByDistrictName = (request, response) => {
           district_name,number_of_confirmed_cases,number_of_confirmed_deaths,
           number_of_recovered_patients,number_of_suspected_cases
           ORDER BY date_added desc;
-          `, [district_name],
+          `,
+    [district_name],
     (error, results) => {
       if (error) {
         throw error;
       }
-      districts = nestGeolocationData(results.rows) 
+      districts = nestGeolocationData(results.rows);
       response.status(200).json(districts);
     }
   );
@@ -89,23 +92,22 @@ const getAllDataByDistrictName = (request, response) => {
           district_name,number_of_confirmed_cases,number_of_confirmed_deaths,
           number_of_recovered_patients,number_of_suspected_cases
           ORDER BY date_added desc;
-          `, [district_name],
+          `,
+    [district_name],
     (error, results) => {
       if (error) {
         throw error;
       }
-      districts = nestGeolocationData(results.rows) 
+      districts = nestGeolocationData(results.rows);
       response.status(200).json(districts);
     }
   );
 };
-
-
 
 module.exports = {
   getCountryData,
   getDistrictsData,
   getDataByDistrictName,
   getAllDataByDistrictName,
-  getAllCountryData
+  getAllCountryData,
 };
