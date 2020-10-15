@@ -38,7 +38,7 @@ $ curl https://covid.malawianic.com/api/national/all/```
 
 ### /api/districts
 
-Recent cases per district in Malawi
+Recent cases per district in Malawi.
 
 ##### Example
 
@@ -96,12 +96,6 @@ git clone https://github.com/stanulilic/stanleyulili.com.git
 npm install
 ```
 
-user: "coviduser",
-host: "localhost",
-database: "covid",
-password: "&(co#83k38",
-port: 5432,
-
 3. Install PostgreSQL on your system.
 
 4. Create a user for a database.
@@ -116,6 +110,6 @@ CREATE ROLE coviduser WITH LOGIN PASSWORD 'password';
 CREATE DATABASE covid;
 ```
 
-You can request for a database dump from me to load the data into the database.
+You can request for a database dump from me and load the data into the database.
 
 6. Update your credentials in `auto-queries.js` if you created a user with different credentials.
